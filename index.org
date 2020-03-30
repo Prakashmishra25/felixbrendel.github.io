@@ -1,0 +1,838 @@
+#+title: Intro to C and C++
+
+* Day 1 Material
+** comments
+#+begin_src c
+  // Anywhere in your C or C++ code you can write your own comments to
+  // remind yourself later what you thought when you wrote that code. Or
+  // just to add explanations.
+
+  // There are two ways to start a comment. The first one is by using
+  // >//<. Every thing you type after a >//< until the end of the line
+  // will be a comment and will not be read by the compiler
+
+  /* The second way is starting the comment with >/*< and finishing it
+     with the same two characters in reverse order. I cannot type it
+     here otherwise the comment would end. Notice that such a comment
+     can span multiple lines. */
+#+end_src
+** basic data types
+#+begin_src c
+  // In C or C++ you have to declare variables. That means, telling the
+  // compiler which types they are. A variable will always have the same
+  // type. There are a few basic types (of which I will show you only
+  // two now). Later we will also learn how to make our own types.
+  // Variable declarations follow the form:
+
+  // <type> <variable_name>;
+
+  // The 'int' data type is used for storing whole numbers
+  int i2;
+  i2 = 20;
+
+  // You can also combine the declaration and initialization of a
+  // variable.
+  int i = 10;
+
+  // The data type 'float' is used to store rational numbers
+  float f = 12.001;
+  float f2;
+  f2 = 3.14159265;
+#+end_src
+** the printf function
+#+begin_src c
+  // To type out messages on the terminal you can use the 'printf'
+  // function. There are also other functions that can output to the
+  // terminal but printf is the one which is mostly used. The first
+  // parameter for the printf function is a string. You write stings
+  // enclosed in double quotation marks.
+
+  // To call functions you put a pair of parentheses after their name
+  // and if the function expects any parameters, you also put them
+  // inside of the parentheses, separated by commas. To finish the call,
+  // you have to put a semicolon (";") at the end.
+
+  // This will output >Hello World!< onto the terminal.
+  printf("Hello World!");
+
+  // There are also some special sequences you can use to print on the
+  // next line, or insert a tab character. These sequences are:
+  //   \n   tells printf to keep printing in the next line
+  //   \t   inserts a tab character
+
+  printf("This text\nspans two lines!");
+
+  printf("abc\tde\tf\ng\thi\tjkl\n");
+  // will result in:
+  // abc   de      f
+  // g     hi      jkl
+
+  // To print numbers, you put special markers into the string, and
+  // provide the numbers as additional arguments. The markers are
+  //   %d for int
+  //   %f for float
+
+  // There are more markers and the markers can also be customized but
+  // for now let's stick with those
+
+  printf("%d", 123);   // prints >123<
+  printf("%f", 12.34); // prints >12.340000<
+
+  // You can specify the format of the output with the string
+
+  printf("Here is a whole number: %d\nand a float: %f", 100, 1.1);
+  /* prints:
+     Here is a whole number: 100
+     and a float: 1.100000
+  */
+#+end_src
+** arrays
+#+begin_src c
+  // Arrays are containers for multiple instances of a data type with a
+  // fixed length
+
+  int a[10]; // declares 'a' as an array of ints with the length 10
+
+  // in general such a definition is in the form of
+  // <type> <array_name>[<array_length>];
+
+  // each element can be accessed by the array name and the index you
+  // are interested in. Array indices start at 0 and the highest valid
+  // index is the array_length -1.
+
+  a[0] = 100; // set the 1st element of a to 100
+  a[9] = 5;   // set the 10th element of a to 9
+
+  int b = a[9]; // assign to b the value of a at position 10 (value = 5)
+
+  // if an array is accessed on the left side of an '=', then we are
+  // assigning something into the array enty. If it is on the right side
+  // we are talking about the value that resides in the entry.
+#+end_src
+** if conditionals
+#+begin_src c
+  // If your code has to make decisions you can use "if"-statements.
+  // They allow you to execute different code depending on a condition.
+  // the form of a basic if is:
+
+  // if (<condition>) {
+  //     <code>
+  // }
+
+  // in this case, if the <condition> is true, then <code> will be
+  // executed, otherwise it will be skipped.
+
+  int a = 10;
+  int b = 100;
+
+  if (a < b) {
+      printf("a is less than b (%d < %d)", a, b);
+  }
+
+  // outputs:
+  // a is less than b (10 < 100)
+
+  // You can also add code that should be executed if the condition is
+  // not true. You do this by adding an "else" part.
+
+  // if (<condition>) {
+  //     <then-code>
+  // } else {
+  //     <else-code>
+  // }
+
+
+  int a = 100;
+  int b = 10;
+
+  if (a < b) {
+      printf("a is less than b (%d < %d)", a, b);
+  } else {
+      printf("a is not less than b (%d !< %d)", a, b);
+  }
+
+  // outputs:
+  // a is not less than b (100 !< 10)
+#+end_src
+
+** while loops
+#+begin_src c
+  // while loops are used to repeat some code /while/ (as long as) a
+  // condition is true. A while loop has the following structure. It is
+  // basically like a simple if-statement but runs as long as the
+  // condition keeps being true and not only once.
+
+  // while (<condition>) {
+  //     <code>
+  // }
+
+
+  // the following code will print the numbers fom 0 to 9
+  int i = 0;
+  while (i < 10) {
+      printf("%d\n", i);
+      i = i + 1;
+  }
+#+end_src
+
+** more about conditions
+#+begin_src c
+  // There are more expressions you can use as conditionals, for 'if'
+  // and 'while':
+
+  // symbol    meaning                  example
+  // ---------------------------------------------
+  //  <        less than?               10 < 100
+  //  <=       less than or equal?      10 <= 100
+  //  >        greater than?            100 > 10
+  //  >=       greater than or equal?   100 >= 10
+  //  ==       same value?              10 == 10
+  //  !=       not same value?          12 != 10
+
+  // Notice that you cannot use "=" for comparing values, you have to
+  // use "==". A single "=" is used for assigning values to variables.
+#+end_src
+** the scanf function
+#+begin_src c
+  // To read in values from the user on the terminal, you can use the
+  // scanf function, similarly to the printf function, it expects as the
+  // first argument a string, that specifies the format of what the user
+  // should enter. The same format specifiers apply. The following
+  // arguments are expected to be /addresses/ of the variables that we
+  // want to set. We did not cover adresses, and wil probably also not
+  // cover them next time. In this case, just remember the way to write
+  // it.
+
+  // reading in of a integer.
+  int a;
+  scanf("%d", &a);
+
+  // reading of a floating point value.
+  float b;
+  scanf("%f", &b);
+
+  // reading of two integers and a floating point number, separated by spaces.
+  int c;
+  int d;
+  float e;
+  scanf("%d %d %f", &c, &d, &e);
+
+#+end_src
+* Day 1 Practical
+** the Hello World program
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    printf("Hello World");
+
+    return 0;
+}
+#+end_src
+** the counting program
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+
+    int i = 0;
+    while (i <= 100) {
+        printf("%d\n", i);
+        i = i + 1;
+    }
+
+    return 0;
+}
+#+end_src
+
+** the factorial program
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    int n;
+
+    printf("Enter a whole number");
+    scanf("%d", &n);
+
+    int result = 1;
+    int i = 1;
+
+    while (i<=n) {
+        result = result * i;
+
+        i = i + 1;
+    }
+
+    printf("The result is: %d", result);
+
+    return 0;
+}
+#+end_src
+
+* Day 1 Homework
+** array of factorials
+Write a program =fac_array.c= that creates an float array of size 100 and into every index i, writes
+$fac(i)$ where $fac$ is the factorial function. After the creation and filling of the array, loop
+over it and print every number. A run of that program should look like this:
+
+#+begin_src sh
+a.exe
+
+fac(0) = 1.000000
+fac(1) = 1.000000
+fac(2) = 2.000000
+fac(3) = 6.000000
+fac(4) = 24.000000
+fac(5) = 120.000000
+fac(6) = 720.000000
+fac(7) = 5040.000000
+fac(8) = 40320.000000
+fac(9) = 362880.000000
+fac(10) = 3628800.000000
+....
+#+end_src
+** prime numbers
+Write a program =prime.c= that asks the user for a number and prints out if it is a prime number or
+not. For doing this you will need to be able to check if a number is divisible by another number. In
+C there is the modulo operator (=%=) that calculates the *rest* of the division.
+
+#+begin_src c
+ 5 % 2 == 1 // because  5 / 2 == 2 rest 1
+ 5 % 5 == 0 // because  5 / 5 == 1 rest 0
+ 5 % 1 == 0 // because  5 / 1 == 5 rest 0
+12 % 5 == 2 // because 12 / 5 == 2 rest 2
+12 % 3 == 0 // because 12 / 3 == 4 rest 0
+#+end_src
+
+So whenever the =a % b= is 0, then a is divisible by b. A interaction with the prime program could
+look like this.
+
+#+begin_src sh
+a.exe
+
+Enter a whole number: 98
+The number 98 is not a prime number (divisible by 49).
+#+end_src
+
+or like this
+
+#+begin_src sh
+a.exe
+
+Enter a whole number: 97
+The number 97 is a prime number.
+#+end_src
+** fibonacci numbers
+Write a program =fib.c= that, when run, asks the program for a whole number $n$ and calculates
+$fib(n)$, where $fib$ is defined as follows
+
+$$ fib(0) = 1 \\ fib(1) = 1 \\ fib(n) = fib(n-1) + fib(n-2) $$
+
+The frist few fibonacci numbers therefore are:
+
+$$1\ 1\ 2\ 3\ 5\ 8\ 13\ 21\ 34\ 55\dots$$
+
+Runs of the program could look like this:
+
+#+begin_src sh
+a.exe
+
+Enter a whole number: 3
+fib(3) = 3
+
+a.exe
+
+Enter a whole number: 20
+fib(20) = 10946
+#+end_src
+** babylonian method of finding square roots
+   A way to iteratively estimate square roots is [[https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method][babylonian method of finding square roots]].
+
+   1. Start with an initial guess $x_0$ (1 works, too) of the square root of a number $S$.
+   2. Every next estimate $x_{n+1}$ depends on the last one
+      $$x_{n+1} = \frac{1}{2}(x_n+\frac{S}{x_n})$$
+   3. Repeat step 2 until the desired precision is reached.
+
+   Write a program =sqrt.c= that reads a float from the user and calculates its square root to the
+   precision of 6 digits after the decimal point. A run will look like this:
+
+#+begin_src sh
+a.exe
+
+Enter any number: 2
+The square root of 2.000000 is 1.414214
+#+end_src
+* Day 1 Homework Solutions
+** array of factorials
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    int array_length = 40;
+    float array[array_length];
+
+    int array_counter = 0;
+    while (array_counter < array_length) {
+        array[array_counter] = 1;
+
+        int fac_counter = 1;
+        while (fac_counter<=array_counter) {
+            array[array_counter] = array[array_counter] * fac_counter;
+            fac_counter = fac_counter + 1;
+        }
+
+        array_counter = array_counter + 1;
+    }
+
+    array_counter = 0;
+    while (array_counter < array_length) {
+        printf("fac(%d) = %f\n", array_counter, array[array_counter]);
+        array_counter = array_counter + 1;
+    }
+
+    return 0;
+}
+
+#+end_src
+
+** prime numbers
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    int test;
+
+    printf("Enter a whole number: ");
+    scanf("%d", &test);
+
+    int largest_divisor = 1;
+    int counter = 2;
+    while (counter < test) {
+        if (test % counter == 0) {
+            largest_divisor = counter;
+        }
+        counter = counter + 1;
+    }
+
+    if (largest_divisor == 1) {
+        printf("The number %d is a prime number.", test);
+    } else {
+        printf("The number %d is not a prime number (divisible by %d).", test, largest_divisor);
+    }
+
+    return 0;
+}
+#+end_src
+** fibonacci numbers
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    int n;
+
+    printf("Enter a whole number: ");
+    scanf("%d", &n);
+
+    int a = 1;
+    int b = 1;
+    int counter = 0;
+    while (counter < n-1) {
+        int temp = a;
+        a = b;
+        b = b + temp;
+        counter = counter + 1;
+    }
+
+    printf("fib(%d) = %d\n", n, b);
+
+    return 0;
+}
+#+end_src
+** babylonian method of finding square roots
+#+begin_src c
+#include <stdio.h>
+
+int main(int argc, char* arg[]) {
+    float precision = 0.000001;
+    float s;
+
+    printf("Enter any number: ");
+    scanf("%f", &s);
+
+    float x_n = 1;
+    float x_np1;
+    float difference = 1;
+
+    while (difference > precision) {
+        x_np1 = (x_n+(s/x_n))*0.5;
+
+        difference = x_np1 - x_n;
+
+        if (difference < 0) {
+            difference = -difference;
+        }
+
+        x_n = x_np1;
+    }
+
+    printf("The square root of %f is %f\n", s, x_np1);
+
+    return 0;
+}
+#+end_src
+* Day 2 Material
+** build scripts
+#+begin_src bat
+  :: a build script is a little program to compile oyur program. While
+  :: you /could/ call the compiler every time from the terminal, it gets
+  :: more inconvenient as we add more compiler options a simple build
+  :: script is just a .bat file that contains the lines you would have
+  :: entered in the terminal itself. Later you can call this script from
+  :: the terminal and it has the same effect as executing every line in
+  :: there manually.
+
+  gcc program.c
+
+  :: at this point you probably wonder why the compiler always outputted
+  :: an a.exe file. we can control the name of the output with the "-o"
+  :: option:
+
+  gcc -o program program.c
+
+  :: this creates the executable "program.c"
+#+end_src
+** functions
+#+begin_src c
+  // Now let's take a look at how we can define our own functions. The
+  // syntax for that is:
+
+  // <return_type> <function_name>(<list_of_parameters>) {
+  //     <code>
+  // }
+
+  // Addidtionally there is the keyword "return" that instructs the
+  // function to end and give back the following value to the calling
+  // context. This is the same "return" that we always wrote in the main
+  // function. So a function that calcualtes the average of two floats
+  // can be written as:
+
+  float average(float a, float b) {
+      return (a + b) / 2;
+  }
+
+  // We can later use that function
+
+  int main(int agc, char* argv[]) {
+      float f1 = 12.233;
+      float f2 = 3.1313;
+      printf("The average of %f and %f is %f", f1, f2, average(f1, f2));
+      return 0;
+  }
+
+  // outputs: The average of 12.233000 and 3.131300 is 7.682150
+#+end_src
+** forward declarations
+#+begin_src c
+  // Note that a function must be defined before it is used, so the
+  // program wouldn't compile if the average function was defined under
+  // the main function. To still be able to write the functions on a
+  // order that makes sense to you and not onyl the compiler, you can
+  // just tell the conpiler what functions will come later without
+  // actually writing them before.
+
+  // This might sound complicated but this is a core concept of C. You
+  // do this by writing just the function header. In our case it would
+  // look like this:
+
+  float average(float a, float b);
+
+  // It includes the return type, name, and arguements. Actually the
+  // names of the arguments are optional. We can also just write:
+
+  float average(float, float);
+#+end_src
+
+#+begin_src c
+  // We call this a Forward declaration. With this we gain the freedom
+  // to write our functions wherever and in what order we want, so if we
+  // want to write the average function after the main function we would
+  // do like this:
+  #include <stdio.h>
+
+  float average(float, float);
+
+  int main(int agc, char* argv[]) {
+      float f1 = 12.233;
+      float f2 = 3.1313;
+      printf("The average of %f and %f is %f", f1, f2, average(f1, f2));
+      return 0;
+  }
+
+  float average(float a, float b) {
+      return (a + b) / 2;
+  }
+#+end_src
+** splitting the program into multiple files
+#+begin_src bat
+  :: As you write bigger programs you usually want to split it up into
+  :: logic chunks. If you hava a lot of functions that do math, like
+  :: calculating averages and doing vector math, it would make sense to
+  :: pack them all into a math.c so that they are nice and easy to find
+  :: later.
+
+  :: But then how can they be accessed from the main program?
+
+  :: Again we will need to forward declare the functions of our little
+  :: math library, and additionally add the math.c file to the compiler
+  :: call in the build script so that it will also be compiled:
+  gcc -o program program.c math.c
+#+end_src
+
+#+begin_src c
+  // So the program would look something like this:
+
+  // ----------------- main.c ------------------------
+  #include <stdio.h>
+
+  float average(float, float);
+
+  int main(int agc, char* argv[]) {
+      float f1 = 12.233;
+      float f2 = 3.1313;
+      printf("The average of %f and %f is %f", f1, f2, average(f1, f2));
+      return 0;
+  }
+#+end_src
+
+#+begin_src c
+  // ----------------- math.c ------------------------
+  float average(float a, float b) {
+      return (a + b) / 2;
+  }
+#+end_src
+
+#+begin_src c
+  // Still it is kind of bothersome having to manually forward declare
+  // all the functions we want to use from math.c So one more step you
+  // can do is write a header-file. This is a file only consisting of
+  // forward declarations, that we can also #include. it would look like
+  // this:
+
+  // ----------------- main.c ------------------------
+  #include <stdio.h>
+  #include "math.h" // notice the quotations instead of <>
+
+  int main(int agc, char* argv[]) {
+      float f1 = 12.233;
+      float f2 = 3.1313;
+      printf("The average of %f and %f is %f", f1, f2, average(f1, f2));
+      return 0;
+  }
+#+end_src
+
+#+begin_src c
+  // ----------------- math.c ------------------------
+
+  // NOTE: We also include math.h here so we don't have to forward
+  // declare the functions for this file too..
+  #include "math.h"
+  float average(float a, float b) {
+      return (a + b) / 2;
+  }
+#+end_src
+
+#+begin_src c
+  // ----------------- math.h ------------------------
+  float average(float, float);
+
+#+end_src
+
+** more about loops
+#+begin_src c
+  // There are two more looping constructs in C that I didn't show you
+  // last time. While every loop can be expressed with a simple while
+  // loop, the others add some convenience.
+
+  // You might have noticed that for our while loops we always had a
+  // variable as the "counter", in the conditino we checked if the
+  // counter reached it's limit and in the while body we inceremented or
+  // decremented the counter. This exactly what the for-loop was made
+  // for. Compare these two loops
+
+  int c = 0;
+  while (c < 10) {
+      printf("%d\n", c);
+      c = c + 1;
+  }
+
+  for (int c = 0; c < 10; c = c + 1) {
+      printf("%d\n", c);
+  }
+
+  // The for loop combines the act of defining a counter variable, a
+  // condition when to stop and an action to to after every step.
+
+  // for (<declaration>; <condition>; <action_after_step>) {
+  //     <code>
+  // }
+#+end_src
+
+#+begin_src c
+  // There is also another variant of the while loop, the do-while loop.
+  // Instead of checking for the condition at the start, it checks at
+  // the end, so the loop body is run at least one time.
+
+  // do {
+  //     <code>
+  // } while(<condition>);
+
+  // here you need a semicolon at the end of the loop.
+
+  int password = 112233;
+  int input;
+  do {
+      printf("Enter the password: ");
+      scanf("%d", &input);
+  } while(input != password);
+#+end_src
+
+#+begin_src c
+  // All these loop also give you control to jump to the next iteration,
+  // or break out of the loop completely. The keywords fot that are
+  // "continue" and "break"
+
+  // Sum up the numbers from 1 to 10 if they are divisible by 2
+  int sum = 0;
+  for (int i = 1; i <= 10; i = i +1) {
+      if (i % 2 != 0) {
+          continue;
+      }
+      sum = sum + i;
+  }
+#+end_src
+
+#+begin_src c
+  // This prints the numbers form 1 to 10 but stops when i == 5
+  for (int i = 1; i <= 10; i = i +1) {
+      if (i == 5) {
+          break;
+      }
+      printf("%d\n", i);
+  }
+#+end_src
+* Day 2 Homework
+** recursive functions
+   Recall the definitions of the factorial function $fac(n)$ and the fibonacci function $fib(n)$.
+
+\begin{align}
+    fac(0) &= 1 \\
+    fac(n) &= n\cdot fac(n-1)\\
+    \text{and}  \\
+    fib(0) &= 1 \\
+    fib(1) &= 1 \\
+    fib(n) &= fib(n-1) + fib(n-2)
+\end{align}
+
+   Write a program =fac_fib.c= in which you implement the functions =int fac(int n)= and =int
+   fib(int n)= *without any loops*. Just implement them the way they are defined mathematically. You
+   will need to call the functions themselves in their body to calculate the result. This is called
+   a /recursive call/ and these functions are /recursive/. For example, to implement =fac= you will
+   need to call =fac= in its body.
+
+   Check if your implementations work in the main function.
+
+** tiny calculator
+   Setup a a simple project:
+    1) create a new folder =tiny_calc=
+    2) in there create:
+      - =tiny_calc.c=
+      - =math.c=
+      - =math.h=
+      - =build.bat=
+
+   This =build.bat= will compile the program and run it, but only run it, if there was no error
+   (that's what =|| exit /B 1= does). Also it will not show the commands itself in the terminal
+   again, only their output (that is what =@echo off= does). You can reuse this build.bat for your
+   future projects.
+
+#+begin_src bat
+@echo off
+
+gcc -o tiny_calc.exe tiny_calc.c math.c || exit /B 1
+
+tiny_calc.exe
+#+end_src
+
+   The =main= function will be in =tiny_calc.c= that will asks the user what he wants to calcualte.
+   The interface would look something like this:
+
+#+begin_src sh
+Welcome to Tiny_Calc!
+
+What do you want to calculate?
+ (1) avrg(a, b)    -- average of two numbers
+ (2) max(a, b)     -- maximum of two numbers
+ (3) min(a, b)     -- minimum of two numbers
+ (4) vlen(x, y, z) -- length of a vector
+ (5) sqrt(x)       -- square root of a number
+ (5) fib(n)        -- fibonacci of a number
+ (6) fac(n)        -- factorial of a number
+>>
+#+end_src
+
+   The program then expects the user to enter a number between 1 and 6. Depending on the selected
+   operation, one or two or three numbers have to be read in from the user. Because that is
+   something we will do in all cases, write a function =float read_number()= in =tiny_calc.c= that
+   reads floating numbers from the user. Then later, whenever you want to ask the user for a number,
+   just call this function. After the user choses an operation and enters the required numbers, the
+   result should be printed.
+
+
+   All the actual math functions should be implemented in =math.c= and be forward declared in
+   =math.h=.
+
+   *Notes*:
+    - Don't include anything except =<stdio.h>= where you need it
+    - The =vlen= function takes in the the three components of a 3d vector as parameters to
+      calculate the length you can use $\sqrt{x^2 + y^2 + z^2}$
+    - The =sqrt= should calculate to 6 places after the decimal point precision.
+    - The =fac= and =fib= functions you can copy from the earlier homework ([[recursive functions]])
+
+** simple game
+   Write a small text game that shows a fight between two characters. Both characters have an
+   initial health of 100 and both hit each other with random strength (between 0 and 20). You can
+   generate random integers with the =int rand()= function. You will need to =#include <stdlib.h>=.
+   To prevent generating the same random numbers every time, let the user enter a seed and call the
+   =srand(int)= function with the seed as parameter at the start of main.
+
+   A run could look like this:
+
+#+begin_src sh
+Enter a seed (number) >> 123123
+
+A hits B with 15  -> A: 100  B: 85
+B hits A with 2   -> A: 98   B: 85
+< ... >
+B hits A with 12   -> A: -3  B: 9
+
+B wins after 8 turns and has 9 health left!
+#+end_src
+
+   *Note*: To generate random integers in a given range you can use the =%= operator. For example,
+   =rand() % 10= generates random numbers between 0 and 9.
+
+* Future                                                           :noexport:
+** structs
+** convenience
+- leave out {} for single statment
+- i += n and ++i
+** labels and goto
+** switch statements
+** strings
+** enums
+ used for types / categories
+** pointers and adresses
+ & and ->
+** sizeof
+** heap and stack memory

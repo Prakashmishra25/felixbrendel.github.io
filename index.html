@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Intro to C and C++</title>
+<!-- 2020-03-30 Mo 17:50 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Felix Brendel">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style type="text/css">
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-9"><h1 class="title">Intro to C and C++</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Day 1 Material</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> comments</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Anywhere in your C or C++ code you can write your own comments to</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">remind yourself later what you thought when you wrote that code. Or</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">just to add explanations.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There are two ways to start a comment. The first one is by using</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">&gt;//&lt;. Every thing you type after a &gt;//&lt; until the end of the line</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">will be a comment and will not be read by the compiler</span>
+
+<span style="color: #46BA3C; font-style: italic;">/* </span><span style="color: #46BA3C; font-style: italic;">The second way is starting the comment with &gt;/*&lt; and finishing it</span>
+<span style="color: #46BA3C; font-style: italic;">   with the same two characters in reverse order. I cannot type it</span>
+<span style="color: #46BA3C; font-style: italic;">   here otherwise the comment would end. Notice that such a comment</span>
+<span style="color: #46BA3C; font-style: italic;">   can span multiple lines. </span><span style="color: #46BA3C; font-style: italic;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> basic data types</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">In C or C++ you have to declare variables. That means, telling the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">compiler which types they are. A variable will always have the same</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">type. There are a few basic types (of which I will show you only</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">two now). Later we will also learn how to make our own types.</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Variable declarations follow the form:</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">&lt;type&gt; &lt;variable_name&gt;;</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">The 'int' data type is used for storing whole numbers</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i2</span>;
+i2 = 20;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">You can also combine the declaration and initialization of a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">variable.</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 10;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">The data type 'float' is used to store rational numbers</span>
+<span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f</span> = 12.001;
+<span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f2</span>;
+f2 = 3.14159265;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> the printf function</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">To type out messages on the terminal you can use the 'printf'</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">function. There are also other functions that can output to the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">terminal but printf is the one which is mostly used. The first</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">parameter for the printf function is a string. You write stings</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">enclosed in double quotation marks.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">To call functions you put a pair of parentheses after their name</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">and if the function expects any parameters, you also put them</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">inside of the parentheses, separated by commas. To finish the call,</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">you have to put a semicolon (";") at the end.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">This will output &gt;Hello World!&lt; onto the terminal.</span>
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"Hello World!"</span><span style="color: #ff8c00;">)</span>;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There are also some special sequences you can use to print on the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">next line, or insert a tab character. These sequences are:</span>
+<span style="color: #46BA3C; font-style: italic;">//   </span><span style="color: #46BA3C; font-style: italic;">\n   tells printf to keep printing in the next line</span>
+<span style="color: #46BA3C; font-style: italic;">//   </span><span style="color: #46BA3C; font-style: italic;">\t   inserts a tab character</span>
+
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"This text\nspans two lines!"</span><span style="color: #ff8c00;">)</span>;
+
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"abc\tde\tf\ng\thi\tjkl\n"</span><span style="color: #ff8c00;">)</span>;
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">will result in:</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">abc   de      f</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">g     hi      jkl</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">To print numbers, you put special markers into the string, and</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">provide the numbers as additional arguments. The markers are</span>
+<span style="color: #46BA3C; font-style: italic;">//   </span><span style="color: #46BA3C; font-style: italic;">%d for int</span>
+<span style="color: #46BA3C; font-style: italic;">//   </span><span style="color: #46BA3C; font-style: italic;">%f for float</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There are more markers and the markers can also be customized but</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">for now let's stick with those</span>
+
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"%d"</span>, 123<span style="color: #ff8c00;">)</span>;   <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">prints &gt;123&lt;</span>
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"%f"</span>, 12.34<span style="color: #ff8c00;">)</span>; <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">prints &gt;12.340000&lt;</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">You can specify the format of the output with the string</span>
+
+printf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"Here is a whole number: %d\nand a float: %f"</span>, 100, 1.1<span style="color: #ff8c00;">)</span>;
+<span style="color: #46BA3C; font-style: italic;">/* </span><span style="color: #46BA3C; font-style: italic;">prints:</span>
+<span style="color: #46BA3C; font-style: italic;">   Here is a whole number: 100</span>
+<span style="color: #46BA3C; font-style: italic;">   and a float: 1.100000</span>
+<span style="color: #46BA3C; font-style: italic;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> arrays</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Arrays are containers for multiple instances of a data type with a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">fixed length</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">a</span><span style="color: #ff8c00;">[</span>10<span style="color: #ff8c00;">]</span>; <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">declares 'a' as an array of ints with the length 10</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">in general such a definition is in the form of</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">&lt;type&gt; &lt;array_name&gt;[&lt;array_length&gt;];</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">each element can be accessed by the array name and the index you</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">are interested in. Array indices start at 0 and the highest valid</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">index is the array_length -1.</span>
+
+<span style="color: #268bd2;">a</span><span style="color: #ff8c00;">[</span>0<span style="color: #ff8c00;">]</span> = 100; <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">set the 1st element of a to 100</span>
+<span style="color: #268bd2;">a</span><span style="color: #ff8c00;">[</span>9<span style="color: #ff8c00;">]</span> = 5;   <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">set the 10th element of a to 9</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">b</span> = a<span style="color: #ff8c00;">[</span>9<span style="color: #ff8c00;">]</span>; <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">assign to b the value of a at position 10 (value = 5)</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">if an array is accessed on the left side of an '=', then we are</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">assigning something into the array enty. If it is on the right side</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">we are talking about the value that resides in the entry.</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> if conditionals</h3>
+<div class="outline-text-3" id="text-1-5">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">If your code has to make decisions you can use "if"-statements.</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">They allow you to execute different code depending on a condition.</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">the form of a basic if is:</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">if (&lt;condition&gt;) {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">in this case, if the &lt;condition&gt; is true, then &lt;code&gt; will be</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">executed, otherwise it will be skipped.</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">a</span> = 10;
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">b</span> = 100;
+
+<span style="color: #859900;">if</span> <span style="color: #ff8c00;">(</span>a &lt; b<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"a is less than b (%d &lt; %d)"</span>, a, b<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">outputs:</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">a is less than b (10 &lt; 100)</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">You can also add code that should be executed if the condition is</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">not true. You do this by adding an "else" part.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">if (&lt;condition&gt;) {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;then-code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">} else {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;else-code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">}</span>
+
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">a</span> = 100;
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">b</span> = 10;
+
+<span style="color: #859900;">if</span> <span style="color: #ff8c00;">(</span>a &lt; b<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"a is less than b (%d &lt; %d)"</span>, a, b<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span> <span style="color: #859900;">else</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"a is not less than b (%d !&lt; %d)"</span>, a, b<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">outputs:</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">a is not less than b (100 !&lt; 10)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> while loops</h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">while loops are used to repeat some code /while/ (as long as) a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">condition is true. A while loop has the following structure. It is</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">basically like a simple if-statement but runs as long as the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">condition keeps being true and not only once.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">while (&lt;condition&gt;) {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">}</span>
+
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">the following code will print the numbers fom 0 to 9</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 0;
+<span style="color: #859900;">while</span> <span style="color: #ff8c00;">(</span>i &lt; 10<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d\n"</span>, i<span style="color: #ff1493;">)</span>;
+    i = i + 1;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> more about conditions</h3>
+<div class="outline-text-3" id="text-1-7">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There are more expressions you can use as conditionals, for 'if'</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">and 'while':</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">symbol    meaning                  example</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">---------------------------------------------</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">&lt;        less than?               10 &lt; 100</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">&lt;=       less than or equal?      10 &lt;= 100</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">&gt;        greater than?            100 &gt; 10</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">&gt;=       greater than or equal?   100 &gt;= 10</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">==       same value?              10 == 10</span>
+<span style="color: #46BA3C; font-style: italic;">//  </span><span style="color: #46BA3C; font-style: italic;">!=       not same value?          12 != 10</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Notice that you cannot use "=" for comparing values, you have to</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">use "==". A single "=" is used for assigning values to variables.</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> the scanf function</h3>
+<div class="outline-text-3" id="text-1-8">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">To read in values from the user on the terminal, you can use the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">scanf function, similarly to the printf function, it expects as the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">first argument a string, that specifies the format of what the user</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">should enter. The same format specifiers apply. The following</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">arguments are expected to be /addresses/ of the variables that we</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">want to set. We did not cover adresses, and wil probably also not</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">cover them next time. In this case, just remember the way to write</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">it.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">reading in of a integer.</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">a</span>;
+scanf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"%d"</span>, &amp;a<span style="color: #ff8c00;">)</span>;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">reading of a floating point value.</span>
+<span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span>;
+scanf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"%f"</span>, &amp;b<span style="color: #ff8c00;">)</span>;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">reading of two integers and a floating point number, separated by spaces.</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">c</span>;
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">d</span>;
+<span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">e</span>;
+scanf<span style="color: #ff8c00;">(</span><span style="color: #2aa198;">"%d %d %f"</span>, &amp;c, &amp;d, &amp;e<span style="color: #ff8c00;">)</span>;
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Day 1 Practical</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> the Hello World program</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Hello World"</span><span style="color: #ff1493;">)</span>;
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> the counting program</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 0;
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>i &lt;= 100<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        printf<span style="color: #7fff00;">(</span><span style="color: #2aa198;">"%d\n"</span>, i<span style="color: #7fff00;">)</span>;
+        i = i + 1;
+    <span style="color: #ff1493;">}</span>
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> the factorial program</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">n</span>;
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Enter a whole number"</span><span style="color: #ff1493;">)</span>;
+    scanf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d"</span>, &amp;n<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">result</span> = 1;
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 1;
+
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>i&lt;=n<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        result = result * i;
+
+        i = i + 1;
+    <span style="color: #ff1493;">}</span>
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The result is: %d"</span>, result<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Day 1 Homework</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> array of factorials</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Write a program <code>fac_array.c</code> that creates an float array of size 100 and into every index i, writes
+\(fac(i)\) where \(fac\) is the factorial function. After the creation and filling of the array, loop
+over it and print every number. A run of that program should look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">a.exe
+
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>0<span style="color: #ff8c00;">)</span> = 1.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>1<span style="color: #ff8c00;">)</span> = 1.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>2<span style="color: #ff8c00;">)</span> = 2.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>3<span style="color: #ff8c00;">)</span> = 6.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>4<span style="color: #ff8c00;">)</span> = 24.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>5<span style="color: #ff8c00;">)</span> = 120.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>6<span style="color: #ff8c00;">)</span> = 720.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>7<span style="color: #ff8c00;">)</span> = 5040.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>8<span style="color: #ff8c00;">)</span> = 40320.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>9<span style="color: #ff8c00;">)</span> = 362880.000000
+<span style="color: #b58900;">fac</span><span style="color: #ff8c00;">(</span>10<span style="color: #ff8c00;">)</span> = 3628800.000000
+....
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> prime numbers</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Write a program <code>prime.c</code> that asks the user for a number and prints out if it is a prime number or
+not. For doing this you will need to be able to check if a number is divisible by another number. In
+C there is the modulo operator (<code>%</code>) that calculates the <b>rest</b> of the division.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c"> 5 % 2 == 1 <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">because  5 / 2 == 2 rest 1</span>
+ 5 % 5 == 0 <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">because  5 / 5 == 1 rest 0</span>
+ 5 % 1 == 0 <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">because  5 / 1 == 5 rest 0</span>
+12 % 5 == 2 <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">because 12 / 5 == 2 rest 2</span>
+12 % 3 == 0 <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">because 12 / 3 == 4 rest 0</span>
+</pre>
+</div>
+
+<p>
+So whenever the <code>a % b</code> is 0, then a is divisible by b. A interaction with the prime program could
+look like this.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">a.exe
+
+Enter a whole number: 98
+The number 98 is not a prime number <span style="color: #ff8c00;">(</span>divisible by 49<span style="color: #ff8c00;">)</span>.
+</pre>
+</div>
+
+<p>
+or like this
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">a.exe
+
+Enter a whole number: 97
+The number 97 is a prime number.
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> fibonacci numbers</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Write a program <code>fib.c</code> that, when run, asks the program for a whole number \(n\) and calculates
+\(fib(n)\), where \(fib\) is defined as follows
+</p>
+
+<p>
+\[ fib(0) = 1 \\ fib(1) = 1 \\ fib(n) = fib(n-1) + fib(n-2) \]
+</p>
+
+<p>
+The frist few fibonacci numbers therefore are:
+</p>
+
+<p>
+\[1\ 1\ 2\ 3\ 5\ 8\ 13\ 21\ 34\ 55\dots\]
+</p>
+
+<p>
+Runs of the program could look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">a.exe
+
+Enter a whole number: 3
+<span style="color: #b58900;">fib</span><span style="color: #ff8c00;">(</span>3<span style="color: #ff8c00;">)</span> = 3
+
+a.exe
+
+Enter a whole number: 20
+<span style="color: #b58900;">fib</span><span style="color: #ff8c00;">(</span>20<span style="color: #ff8c00;">)</span> = 10946
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> babylonian method of finding square roots</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+A way to iteratively estimate square roots is <a href="https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method">babylonian method of finding square roots</a>.
+</p>
+
+<ol class="org-ol">
+<li>Start with an initial guess \(x_0\) (1 works, too) of the square root of a number \(S\).
+</li>
+<li>Every next estimate \(x_{n+1}\) depends on the last one
+\[x_{n+1} = \frac{1}{2}(x_n+\frac{S}{x_n})\]
+</li>
+<li>Repeat step 2 until the desired precision is reached.
+</li>
+</ol>
+
+<p>
+Write a program <code>sqrt.c</code> that reads a float from the user and calculates its square root to the
+precision of 6 digits after the decimal point. A run will look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">a.exe
+
+Enter any number: 2
+The square root of 2.000000 is 1.414214
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Day 1 Homework Solutions</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> array of factorials</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">array_length</span> = 40;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">array</span><span style="color: #ff1493;">[</span>array_length<span style="color: #ff1493;">]</span>;
+
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">array_counter</span> = 0;
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>array_counter &lt; array_length<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        array<span style="color: #7fff00;">[</span>array_counter<span style="color: #7fff00;">]</span> = 1;
+
+        <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">fac_counter</span> = 1;
+        <span style="color: #859900;">while</span> <span style="color: #7fff00;">(</span>fac_counter&lt;=array_counter<span style="color: #7fff00;">)</span> <span style="color: #7fff00;">{</span>
+            array<span style="color: #00bfff;">[</span>array_counter<span style="color: #00bfff;">]</span> = array<span style="color: #00bfff;">[</span>array_counter<span style="color: #00bfff;">]</span> * fac_counter;
+            fac_counter = fac_counter + 1;
+        <span style="color: #7fff00;">}</span>
+
+        array_counter = array_counter + 1;
+    <span style="color: #ff1493;">}</span>
+
+    array_counter = 0;
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>array_counter &lt; array_length<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        printf<span style="color: #7fff00;">(</span><span style="color: #2aa198;">"fac(%d) = %f\n"</span>, array_counter, array<span style="color: #00bfff;">[</span>array_counter<span style="color: #00bfff;">]</span><span style="color: #7fff00;">)</span>;
+        array_counter = array_counter + 1;
+    <span style="color: #ff1493;">}</span>
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> prime numbers</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">test</span>;
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Enter a whole number: "</span><span style="color: #ff1493;">)</span>;
+    scanf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d"</span>, &amp;test<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">largest_divisor</span> = 1;
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">counter</span> = 2;
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>counter &lt; test<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        <span style="color: #859900;">if</span> <span style="color: #7fff00;">(</span>test % counter == 0<span style="color: #7fff00;">)</span> <span style="color: #7fff00;">{</span>
+            largest_divisor = counter;
+        <span style="color: #7fff00;">}</span>
+        counter = counter + 1;
+    <span style="color: #ff1493;">}</span>
+
+    <span style="color: #859900;">if</span> <span style="color: #ff1493;">(</span>largest_divisor == 1<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        printf<span style="color: #7fff00;">(</span><span style="color: #2aa198;">"The number %d is a prime number."</span>, test<span style="color: #7fff00;">)</span>;
+    <span style="color: #ff1493;">}</span> <span style="color: #859900;">else</span> <span style="color: #ff1493;">{</span>
+        printf<span style="color: #7fff00;">(</span><span style="color: #2aa198;">"The number %d is not a prime number (divisible by %d)."</span>, test, largest_divisor<span style="color: #7fff00;">)</span>;
+    <span style="color: #ff1493;">}</span>
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> fibonacci numbers</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">n</span>;
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Enter a whole number: "</span><span style="color: #ff1493;">)</span>;
+    scanf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d"</span>, &amp;n<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">a</span> = 1;
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">b</span> = 1;
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">counter</span> = 0;
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>counter &lt; n-1<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">temp</span> = a;
+        a = b;
+        b = b + temp;
+        counter = counter + 1;
+    <span style="color: #ff1493;">}</span>
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"fib(%d) = %d\n"</span>, n, b<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> babylonian method of finding square roots</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">argc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">arg</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">precision</span> = 0.000001;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">s</span>;
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Enter any number: "</span><span style="color: #ff1493;">)</span>;
+    scanf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%f"</span>, &amp;s<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">x_n</span> = 1;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">x_np1</span>;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">difference</span> = 1;
+
+    <span style="color: #859900;">while</span> <span style="color: #ff1493;">(</span>difference &gt; precision<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        x_np1 = <span style="color: #7fff00;">(</span>x_n+<span style="color: #00bfff;">(</span>s/x_n<span style="color: #00bfff;">)</span><span style="color: #7fff00;">)</span>*0.5;
+
+        difference = x_np1 - x_n;
+
+        <span style="color: #859900;">if</span> <span style="color: #7fff00;">(</span>difference &lt; 0<span style="color: #7fff00;">)</span> <span style="color: #7fff00;">{</span>
+            difference = -difference;
+        <span style="color: #7fff00;">}</span>
+
+        x_n = x_np1;
+    <span style="color: #ff1493;">}</span>
+
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The square root of %f is %f\n"</span>, s, x_np1<span style="color: #ff1493;">)</span>;
+
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Day 2 Material</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> build scripts</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+
+<pre class="src src-bat"><span style="color: #46BA3C; font-style: italic;">:: a build script is a little program to compile oyur program. While</span>
+<span style="color: #46BA3C; font-style: italic;">:: you /</span><span style="color: #46BA3C; font-style: italic;">could</span><span style="color: #46BA3C; font-style: italic;">/ call </span><span style="color: #268bd2;">the</span><span style="color: #46BA3C; font-style: italic;"> compiler every time from the terminal, it gets</span>
+<span style="color: #46BA3C; font-style: italic;">:: more inconvenient as we add more compiler options a simple build</span>
+<span style="color: #46BA3C; font-style: italic;">:: script is just a .bat file that contains the lines you would have</span>
+<span style="color: #46BA3C; font-style: italic;">:: entered in the terminal itself. Later you can call </span><span style="color: #268bd2;">this</span><span style="color: #46BA3C; font-style: italic;"> script from</span>
+<span style="color: #46BA3C; font-style: italic;">:: the terminal and it has the same effect as executing every line in</span>
+<span style="color: #46BA3C; font-style: italic;">:: there manually.</span>
+
+gcc program.c
+
+<span style="color: #46BA3C; font-style: italic;">:: at this point you probably wonder why the compiler always outputted</span>
+<span style="color: #46BA3C; font-style: italic;">:: an a.exe file. we can control the name of the output with the "-o"</span>
+<span style="color: #46BA3C; font-style: italic;">:: option:</span>
+
+gcc -<span style="color: #268bd2;">o</span> program program.c
+
+<span style="color: #46BA3C; font-style: italic;">:: this creates the executable "program.c"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> functions</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Now let's take a look at how we can define our own functions. The</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">syntax for that is:</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">&lt;return_type&gt; &lt;function_name&gt;(&lt;list_of_parameters&gt;) {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Addidtionally there is the keyword "return" that instructs the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">function to end and give back the following value to the calling</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">context. This is the same "return" that we always wrote in the main</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">function. So a function that calcualtes the average of two floats</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">can be written as:</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">a</span>, <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">return</span> <span style="color: #ff1493;">(</span>a + b<span style="color: #ff1493;">)</span> / 2;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">We can later use that function</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">agc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">argv</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f1</span> = 12.233;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f2</span> = 3.1313;
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The average of %f and %f is %f"</span>, f1, f2, average<span style="color: #7fff00;">(</span>f1, f2<span style="color: #7fff00;">)</span><span style="color: #ff1493;">)</span>;
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">outputs: The average of 12.233000 and 3.131300 is 7.682150</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> forward declarations</h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Note that a function must be defined before it is used, so the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">program wouldn't compile if the average function was defined under</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">the main function. To still be able to write the functions on a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">order that makes sense to you and not onyl the compiler, you can</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">just tell the conpiler what functions will come later without</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">actually writing them before.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">This might sound complicated but this is a core concept of C. You</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">do this by writing just the function header. In our case it would</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">look like this:</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">a</span>, <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span><span style="color: #ff8c00;">)</span>;
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">It includes the return type, name, and arguements. Actually the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">names of the arguments are optional. We can also just write:</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span>, <span style="color: #268bd2;">float</span><span style="color: #ff8c00;">)</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">We call this a Forward declaration. With this we gain the freedom</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">to write our functions wherever and in what order we want, so if we</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">want to write the average function after the main function we would</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">do like this:</span>
+<span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span>, <span style="color: #268bd2;">float</span><span style="color: #ff8c00;">)</span>;
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">agc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">argv</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f1</span> = 12.233;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f2</span> = 3.1313;
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The average of %f and %f is %f"</span>, f1, f2, average<span style="color: #7fff00;">(</span>f1, f2<span style="color: #7fff00;">)</span><span style="color: #ff1493;">)</span>;
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">a</span>, <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">return</span> <span style="color: #ff1493;">(</span>a + b<span style="color: #ff1493;">)</span> / 2;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> splitting the program into multiple files</h3>
+<div class="outline-text-3" id="text-5-4">
+<div class="org-src-container">
+
+<pre class="src src-bat"><span style="color: #46BA3C; font-style: italic;">:: As you write bigger programs you usually want to split it up into</span>
+<span style="color: #46BA3C; font-style: italic;">:: logic chunks. If you hava a lot of functions that do math, like</span>
+<span style="color: #46BA3C; font-style: italic;">:: calculating averages and doing vector math, it would make sense to</span>
+<span style="color: #46BA3C; font-style: italic;">:: pack them all into a math.c so that they are nice and easy to find</span>
+<span style="color: #46BA3C; font-style: italic;">:: later.</span>
+
+<span style="color: #46BA3C; font-style: italic;">:: But then how can they be accessed from the main program?</span>
+
+<span style="color: #46BA3C; font-style: italic;">:: Again we will need to forward declare the functions of our little</span>
+<span style="color: #46BA3C; font-style: italic;">:: math library, and additionally add the math.c file to the compiler</span>
+<span style="color: #46BA3C; font-style: italic;">:: call </span><span style="color: #268bd2;">in</span><span style="color: #46BA3C; font-style: italic;"> the build script so that it will also be compiled:</span>
+gcc -<span style="color: #268bd2;">o</span> program program.c math.c
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">So the program would look something like this:</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">----------------- main.c ------------------------</span>
+<span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span>, <span style="color: #268bd2;">float</span><span style="color: #ff8c00;">)</span>;
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">agc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">argv</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f1</span> = 12.233;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f2</span> = 3.1313;
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The average of %f and %f is %f"</span>, f1, f2, average<span style="color: #7fff00;">(</span>f1, f2<span style="color: #7fff00;">)</span><span style="color: #ff1493;">)</span>;
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">----------------- math.c ------------------------</span>
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">a</span>, <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">return</span> <span style="color: #ff1493;">(</span>a + b<span style="color: #ff1493;">)</span> / 2;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Still it is kind of bothersome having to manually forward declare</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">all the functions we want to use from math.c So one more step you</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">can do is write a header-file. This is a file only consisting of</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">forward declarations, that we can also #include. it would look like</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">this:</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">----------------- main.c ------------------------</span>
+<span style="color: #d33682;">#include</span> <span style="color: #ff8c00;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #ff8c00;">&gt;</span>
+<span style="color: #d33682;">#include</span> <span style="color: #2aa198;">"math.h"</span> <span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">notice the quotations instead of &lt;&gt;</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #b58900;">main</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">agc</span>, <span style="color: #268bd2;">char</span>* <span style="color: #6c71c4;">argv</span><span style="color: #ff1493;">[]</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f1</span> = 12.233;
+    <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">f2</span> = 3.1313;
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"The average of %f and %f is %f"</span>, f1, f2, average<span style="color: #7fff00;">(</span>f1, f2<span style="color: #7fff00;">)</span><span style="color: #ff1493;">)</span>;
+    <span style="color: #859900;">return</span> 0;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">----------------- math.c ------------------------</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #d0bf8f;">NOTE</span><span style="color: #46BA3C; font-style: italic;">: We also include math.h here so we don't have to forward</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">declare the functions for this file too..</span>
+<span style="color: #d33682;">#include</span> <span style="color: #2aa198;">"math.h"</span>
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">a</span>, <span style="color: #268bd2;">float</span> <span style="color: #6c71c4;">b</span><span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">return</span> <span style="color: #ff1493;">(</span>a + b<span style="color: #ff1493;">)</span> / 2;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">----------------- math.h ------------------------</span>
+<span style="color: #268bd2;">float</span> <span style="color: #b58900;">average</span><span style="color: #ff8c00;">(</span><span style="color: #268bd2;">float</span>, <span style="color: #268bd2;">float</span><span style="color: #ff8c00;">)</span>;
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> more about loops</h3>
+<div class="outline-text-3" id="text-5-5">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There are two more looping constructs in C that I didn't show you</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">last time. While every loop can be expressed with a simple while</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">loop, the others add some convenience.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">You might have noticed that for our while loops we always had a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">variable as the "counter", in the conditino we checked if the</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">counter reached it's limit and in the while body we inceremented or</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">decremented the counter. This exactly what the for-loop was made</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">for. Compare these two loops</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">c</span> = 0;
+<span style="color: #859900;">while</span> <span style="color: #ff8c00;">(</span>c &lt; 10<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d\n"</span>, c<span style="color: #ff1493;">)</span>;
+    c = c + 1;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #859900;">for</span> <span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">c</span> = 0; c &lt; 10; c = c + 1<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d\n"</span>, c<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">The for loop combines the act of defining a counter variable, a</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">condition when to stop and an action to to after every step.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">for (&lt;declaration&gt;; &lt;condition&gt;; &lt;action_after_step&gt;) {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">There is also another variant of the while loop, the do-while loop.</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Instead of checking for the condition at the start, it checks at</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">the end, so the loop body is run at least one time.</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">do {</span>
+<span style="color: #46BA3C; font-style: italic;">//     </span><span style="color: #46BA3C; font-style: italic;">&lt;code&gt;</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">} while(&lt;condition&gt;);</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">here you need a semicolon at the end of the loop.</span>
+
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">password</span> = 112233;
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">input</span>;
+<span style="color: #859900;">do</span> <span style="color: #ff8c00;">{</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"Enter the password: "</span><span style="color: #ff1493;">)</span>;
+    scanf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d"</span>, &amp;input<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span> <span style="color: #859900;">while</span><span style="color: #ff8c00;">(</span>input != password<span style="color: #ff8c00;">)</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">All these loop also give you control to jump to the next iteration,</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">or break out of the loop completely. The keywords fot that are</span>
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">"continue" and "break"</span>
+
+<span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">Sum up the numbers from 1 to 10 if they are divisible by 2</span>
+<span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">sum</span> = 0;
+<span style="color: #859900;">for</span> <span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 1; i &lt;= 10; i = i +1<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">if</span> <span style="color: #ff1493;">(</span>i % 2 != 0<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        <span style="color: #859900;">continue</span>;
+    <span style="color: #ff1493;">}</span>
+    sum = sum + i;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #46BA3C; font-style: italic;">// </span><span style="color: #46BA3C; font-style: italic;">This prints the numbers form 1 to 10 but stops when i == 5</span>
+<span style="color: #859900;">for</span> <span style="color: #ff8c00;">(</span><span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">i</span> = 1; i &lt;= 10; i = i +1<span style="color: #ff8c00;">)</span> <span style="color: #ff8c00;">{</span>
+    <span style="color: #859900;">if</span> <span style="color: #ff1493;">(</span>i == 5<span style="color: #ff1493;">)</span> <span style="color: #ff1493;">{</span>
+        <span style="color: #859900;">break</span>;
+    <span style="color: #ff1493;">}</span>
+    printf<span style="color: #ff1493;">(</span><span style="color: #2aa198;">"%d\n"</span>, i<span style="color: #ff1493;">)</span>;
+<span style="color: #ff8c00;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Day 2 Homework</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> recursive functions</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Recall the definitions of the factorial function \(fac(n)\) and the fibonacci function \(fib(n)\).
+</p>
+
+\begin{align}
+    fac(0) &= 1 \\
+    fac(n) &= n\cdot fac(n-1)\\
+    \text{and}  \\
+    fib(0) &= 1 \\
+    fib(1) &= 1 \\
+    fib(n) &= fib(n-1) + fib(n-2)
+\end{align}
+
+<p>
+Write a program <code>fac_fib.c</code> in which you implement the functions <code>int fac(int n)</code> and <code>int
+   fib(int n)</code> <b>without any loops</b>. Just implement them the way they are defined mathematically. You
+will need to call the functions themselves in their body to calculate the result. This is called
+a <i>recursive call</i> and these functions are <i>recursive</i>. For example, to implement <code>fac</code> you will
+need to call <code>fac</code> in its body.
+</p>
+
+<p>
+Check if your implementations work in the main function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> tiny calculator</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Setup a a simple project:
+</p>
+<ol class="org-ol">
+<li>create a new folder <code>tiny_calc</code>
+</li>
+<li>in there create:
+<ul class="org-ul">
+<li><code>tiny_calc.c</code>
+</li>
+<li><code>math.c</code>
+</li>
+<li><code>math.h</code>
+</li>
+<li><code>build.bat</code>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>
+This <code>build.bat</code> will compile the program and run it, but only run it, if there was no error
+(that's what <code>|| exit /B 1</code> does). Also it will not show the commands itself in the terminal
+again, only their output (that is what <code>@echo off</code> does). You can reuse this build.bat for your
+future projects.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bat">@<span style="color: #6c71c4;">echo</span> off
+
+gcc -<span style="color: #268bd2;">o</span> tiny_calc.exe tiny_calc.c math.c || <span style="color: #859900;">exit</span> /<span style="color: #268bd2;">B</span> 1
+
+tiny_calc.exe
+</pre>
+</div>
+
+<p>
+The <code>main</code> function will be in <code>tiny_calc.c</code> that will asks the user what he wants to calcualte.
+The interface would look something like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">Welcome to Tiny_Calc!
+
+What do you want to calculate?
+ <span style="color: #ff8c00;">(</span>1<span style="color: #ff8c00;">)</span> avrg<span style="color: #ff8c00;">(</span>a, b<span style="color: #ff8c00;">)</span>    -- average of two numbers
+ <span style="color: #ff8c00;">(</span>2<span style="color: #ff8c00;">)</span> max<span style="color: #ff8c00;">(</span>a, b<span style="color: #ff8c00;">)</span>     -- maximum of two numbers
+ <span style="color: #ff8c00;">(</span>3<span style="color: #ff8c00;">)</span> min<span style="color: #ff8c00;">(</span>a, b<span style="color: #ff8c00;">)</span>     -- minimum of two numbers
+ <span style="color: #ff8c00;">(</span>4<span style="color: #ff8c00;">)</span> vlen<span style="color: #ff8c00;">(</span>x, y, z<span style="color: #ff8c00;">)</span> -- length of a vector
+ <span style="color: #ff8c00;">(</span>5<span style="color: #ff8c00;">)</span> sqrt<span style="color: #ff8c00;">(</span>x<span style="color: #ff8c00;">)</span>       -- square root of a number
+ <span style="color: #ff8c00;">(</span>5<span style="color: #ff8c00;">)</span> fib<span style="color: #ff8c00;">(</span>n<span style="color: #ff8c00;">)</span>        -- fibonacci of a number
+ <span style="color: #ff8c00;">(</span>6<span style="color: #ff8c00;">)</span> fac<span style="color: #ff8c00;">(</span>n<span style="color: #ff8c00;">)</span>        -- factorial of a number
+&gt;&gt;
+</pre>
+</div>
+
+<p>
+The program then expects the user to enter a number between 1 and 6. Depending on the selected
+operation, one or two or three numbers have to be read in from the user. Because that is
+something we will do in all cases, write a function <code>float read_number()</code> in <code>tiny_calc.c</code> that
+reads floating numbers from the user. Then later, whenever you want to ask the user for a number,
+just call this function. After the user choses an operation and enters the required numbers, the
+result should be printed.
+</p>
+
+
+<p>
+All the actual math functions should be implemented in <code>math.c</code> and be forward declared in
+<code>math.h</code>.
+</p>
+
+<p>
+<b>Notes</b>:
+</p>
+<ul class="org-ul">
+<li>Don't include anything except <code>&lt;stdio.h&gt;</code> where you need it
+</li>
+<li>The <code>vlen</code> function takes in the the three components of a 3d vector as parameters to
+calculate the length you can use \(\sqrt{x^2 + y^2 + z^2}\)
+</li>
+<li>The <code>sqrt</code> should calculate to 6 places after the decimal point precision.
+</li>
+<li>The <code>fac</code> and <code>fib</code> functions you can copy from the earlier homework (<a href="#sec-6-1">recursive functions</a>)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> simple game</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+Write a small text game that shows a fight between two characters. Both characters have an
+initial health of 100 and both hit each other with random strength (between 0 and 20). You can
+generate random integers with the <code>int rand()</code> function. You will need to <code>#include &lt;stdlib.h&gt;</code>.
+To prevent generating the same random numbers every time, let the user enter a seed and call the
+<code>srand(int)</code> function with the seed as parameter at the start of main.
+</p>
+
+<p>
+A run could look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">Enter a seed <span style="color: #ff8c00;">(</span>number<span style="color: #ff8c00;">)</span> &gt;&gt; 123123
+
+A hits B with 15  -&gt; A: 100  B: 85
+B hits A with 2   -&gt; A: 98   B: 85
+&lt; ... &gt;
+B hits A with 12   -&gt; A: -3  B: 9
+
+B wins after 8 turns and has 9 health left!
+</pre>
+</div>
+
+<p>
+<b>Note</b>: To generate random integers in a given range you can use the <code>%</code> operator. For example,
+<code>rand() % 10</code> generates random numbers between 0 and 9.
+</p>
+</div>
+</div>
+</div>
+</div><div class="col-md-3"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Day 1 Material</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. comments</a></li>
+<li><a href="#sec-1-2">1.2. basic data types</a></li>
+<li><a href="#sec-1-3">1.3. the printf function</a></li>
+<li><a href="#sec-1-4">1.4. arrays</a></li>
+<li><a href="#sec-1-5">1.5. if conditionals</a></li>
+<li><a href="#sec-1-6">1.6. while loops</a></li>
+<li><a href="#sec-1-7">1.7. more about conditions</a></li>
+<li><a href="#sec-1-8">1.8. the scanf function</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Day 1 Practical</a>
+<ul class="nav">
+<li><a href="#sec-2-1">2.1. the Hello World program</a></li>
+<li><a href="#sec-2-2">2.2. the counting program</a></li>
+<li><a href="#sec-2-3">2.3. the factorial program</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Day 1 Homework</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. array of factorials</a></li>
+<li><a href="#sec-3-2">3.2. prime numbers</a></li>
+<li><a href="#sec-3-3">3.3. fibonacci numbers</a></li>
+<li><a href="#sec-3-4">3.4. babylonian method of finding square roots</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Day 1 Homework Solutions</a>
+<ul class="nav">
+<li><a href="#sec-4-1">4.1. array of factorials</a></li>
+<li><a href="#sec-4-2">4.2. prime numbers</a></li>
+<li><a href="#sec-4-3">4.3. fibonacci numbers</a></li>
+<li><a href="#sec-4-4">4.4. babylonian method of finding square roots</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Day 2 Material</a>
+<ul class="nav">
+<li><a href="#sec-5-1">5.1. build scripts</a></li>
+<li><a href="#sec-5-2">5.2. functions</a></li>
+<li><a href="#sec-5-3">5.3. forward declarations</a></li>
+<li><a href="#sec-5-4">5.4. splitting the program into multiple files</a></li>
+<li><a href="#sec-5-5">5.5. more about loops</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Day 2 Homework</a>
+<ul class="nav">
+<li><a href="#sec-6-1">6.1. recursive functions</a></li>
+<li><a href="#sec-6-2">6.2. tiny calculator</a></li>
+<li><a href="#sec-6-3">6.3. simple game</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Felix Brendel</p>
+<p class="date">Created: 2020-03-30 Mo 17:50</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="http://orgmode.org">Org-mode</a> 9.3.6)</p>
+</div>
+</footer>
+</body>
+</html>
