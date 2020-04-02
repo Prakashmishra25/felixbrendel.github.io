@@ -822,16 +822,124 @@ B wins after 8 turns and has 9 health left!
    *Note*: To generate random integers in a given range you can use the =%= operator. For example,
    =rand() % 10= generates random numbers between 0 and 9.
 
-* Future                                                           :noexport:
-** structs
+* Day 3 Material
 ** convenience
-- leave out {} for single statment
-- i += n and ++i
+#+begin_src c
+  // Some convenience features:
+
+  // If there is only one thing you want to do inside any loop or an if
+  // statement, you do not need the curly braces {}. It will look like
+  // this:
+
+  if (a < b)
+      printf("a is less than b\n");
+
+  // This only works if really you only want to do _one thing_
+
+  // The second thing is about incrementing and decrementing variables.
+  // Until now whenever we want to to increase a variables value by some
+  // amount we would have to write it like this:
+
+  x = x + 5;
+
+  // To increment by 5 for example. Instread you can also write the same
+  // as:
+
+  x += 5;
+
+  // This has the same meaning and you can use the other arithmetic
+  // operations like this too.
+
+  x += 3 // x = x + 3
+  x -= 3 // x = x - 3
+  x *= 3 // x = x * 3
+  x /= 3 // x = x / 3
+  x %= 3 // x = x % 3
+  // etc
+
+  // If you only want to increment or decrement a variable by 1 there is
+  // also a shorthand for that;
+
+  i++; // i += 1
+  i--; // i -= 1
+
+  // There is also ++i and --i and they will work the same in this case
+  // but there is more to them so let's talk another time more about
+  // them!
+#+end_src
+** linking boolean expressions
+#+begin_src c
+  // A boolean expression is an expression that is either true or false,
+  // like the expression:
+  3 < 5
+  // in this case it is true. As you know by now we use boolean
+  // expression in if-statements or in loops.
+
+  // Sometimes however you want to link two boolean expressions together
+  // for example, how could you write a if-statement that runs if a
+  // variable a is in the interval between 10 and 20? We would need
+  // something like this:
+
+  // if (a > 9 AND a < 21)
+
+  // In C to represent AND and also OR you can use the operators && and ||
+  // so the code from before will look like this:
+
+  if (a > 9 && a < 21)
+      printf("a is in the range [10, 20]\n");
+
+  if (a % 5 == 0 || a % 3 == 0)
+      printf("a is divisible by 5 or 3 (or also both)\n");
+
+#+end_src
+** structs
+#+begin_src c
+  // One really important feature of modern programming languages is
+  // being able to define your own data types, we are not bound to use
+  // the few built-in types. If you want to combine multiple variables
+  // into a single type you use a >struct<. Here is how you define a
+  // custom data type for a 3 dimensional vector, that contains three
+  // floating point numbers.
+
+  struct Vector {
+      float x;
+      float y;
+      float z;
+  };
+
+  // This defines a new type called >struct Vector< that we can then use
+  // to declare variables or parameters or use as a return type.
+
+  // Structs can be passed as parameters to functions and can be
+  // retruned from functions.
+
+  // Taking a vector as a parameter:
+  float vec_len(struct Vector v) {
+      // the members of the struct can be accesses with a >.< after the
+      // name of the variable
+
+      return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+  }
+
+  // Returning a vector
+  struct Vector vec_plus(struct Vector v1, struct Vector v2) {
+      struct Vector result;
+
+      result.x = v1.x + v2.x;
+      result.y = v1.y + v2.y;
+      result.z = v1.z + v2.z;
+
+      return result;
+  }
+#+end_src
+* Future                                                           :noexport:
 ** labels and goto
 ** switch statements
 ** strings
 ** enums
  used for types / categories
+** unions
+** #define
 ** pointers and adresses
  & and ->
 ** sizeof
