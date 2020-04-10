@@ -822,6 +822,23 @@ B wins after 8 turns and has 9 health left!
    *Note*: To generate random integers in a given range you can use the =%= operator. For example,
    =rand() % 10= generates random numbers between 0 and 9.
 
+* Day 2 Homework Solutions
+** recursive functions
+<<hwrec>>
+#+begin_src c
+  int fac(int n) {
+      if (n <= 1)
+          return 1;
+      return n * fac(n-1);
+  }
+
+  int fib(int n) {
+      if (n <= 1)
+          return 1;
+      return fib(n-1) + fib(n-2);
+  }
+#+end_src
+
 * Day 3 Material
 ** convenience
 #+begin_src c
@@ -932,6 +949,223 @@ B wins after 8 turns and has 9 health left!
       return result;
   }
 #+end_src
+* Day 4 Material
+** how calling functions and recursion works
+As you saw in [[hwrec]], functions can call themselves recursively, but still the computer somehow knows
+how to deal with that and produce a meaningful result. Every time you call a function, the computer
+remembers the place it will have to go back again after the function returned. The Computer does
+that by keeping the function calls on a stack, the *call stack*. Each function call has its own
+*stack frame* on the call stack that contains all local variables and parameters the function has.
+For example if the =main= function calls a function =foo= and =foo= calls =bar=, over the time the
+callstack would have a shape like this: like this:
+
+#+begin_src c
+  /**
+     |        |      |        |      |        |
+     |        |      |        |      |--------|
+     |        |      |        |      |  bar   |
+     |        |      |--------|      |--------|
+     |        |      |  foo   |      |  foo   |
+     |--------|      |--------|      |--------|
+     |  main  |      |  main  |      |  main  |
+     |--------|      |--------|      |--------|
+  */
+#+end_src
+
+And then as =bar= returns and =foo= returns and main is again the active function the callstack
+would evolve backwards:
+
+#+begin_src c
+  /**
+     |        |      |        |      |        |
+     |--------|      |        |      |        |
+     |  bar   |      |        |      |        |
+     |--------|      |--------|      |        |
+     |  foo   |      |  foo   |      |        |
+     |--------|      |--------|      |--------|
+     |  main  |      |  main  |      |  main  |
+     |--------|      |--------|      |--------|
+  */
+#+end_src
+
+You can imagine a call to =fac(3)= look like this
+
+#+begin_src c
+  /**
+     |        |   |        |   |        |   |        |   |        |   |        |   |        |
+     |        |   |        |   |        |   |--------|   |--------|   |        |   |        |
+     |        |   |        |   |        |   | fac(1) |   |    1   |   |        |   |        |
+     |        |   |        |   |--------|   |--------|   |--------|   |--------|   |        |
+     |        |   |        |   | fac(2) |   | fac(2) |   | fac(2) |   |   1*2  |   |        |
+     |        |   |--------|   |--------|   |--------|   |--------|   |--------|   |--------|
+     |        |   | fac(3) |   | fac(3) |   | fac(3) |   | fac(3) |   | fac(3) |   |   3*2  |
+     |--------|   |--------|   |--------|   |--------|   |--------|   |--------|   |--------|
+     |  main  |   |  main  |   |  main  |   |  main  |   |  main  |   |  main  |   |  main  |
+     |--------|   |--------|   |--------|   |--------|   |--------|   |--------|   |--------|
+  */
+#+end_src
+
+** stack memory
+In the last section we learned how calls are stacked up ontop of each other on the call stack. The
+call stack is not stored inside the CPU; instead it is a region in your RAM that is used for it, the
+*stack memory*. Note that we do not explicitly control what goes on the stack, it is done for us
+automatically.
+
+One more important thing to remember is, that when a function is called, and a stackframe is
+created, *all the parameters are copied*. So if the functions modifies a parameter, the calling
+function never sees that change. Consider this example:
+
+#+begin_src c
+  #include<stdio.h>
+
+  void change_it(int var) {
+      var = 1000;
+  }
+
+  int main(int argc, char* argv[]) {
+      int var = 10;
+      printf("var is: %d\n", var);
+      change_it(var);
+      printf("var is: %d\n", var);
+      return 0;
+  }
+
+  // outputs:
+  // 10
+  // 10
+#+end_src
+
+The =var= inside =main= is separate from the =var= in =change_it=, so even if =change_it= modified
+the variable, it only changed it's own copy.
+
+** heap memory and pointers
+In contrast to the stack memory that is managed automatically for us, there is also a space in
+memory that we can manange ourselves. It is called the *heap memory*. In C/C++ we can request as
+much heap memory as we want from the operating system. We can do this with the =malloc(int bytes)=
+function, which takes the number of bytes that we want to *allocate* (reserve) as a parameter. But
+how does this work? What is it that =malloc= will return to us? We asked it for memory but how do we
+use it? Where is it?
+
+Thats the point. Malloc returns us the *address* of the region in memory that has been allocated for
+us. So what does an address look like? The memory is just linear, so that means the adresses are
+just numbers. However we shouldn't write an address into an =int= variable. There are a few new
+things now, but let's look at an example:
+
+So allocating space on the heap memory for an integer, looks like this:
+#+begin_src c
+  int* pointer_to_an_int = malloc(sizeof(int));
+#+end_src
+
+So there is 3 things to consider here:
+ - =int*= :: the type of =pointer_to_an_int= is "Pointer to an int" or "Address of an int"
+ - =malloc= :: calling malloc to reserve memory on the heap
+ - =sizeof= :: is a special function that we can give a type as a parameter and returns the number
+   of bytes such a type takes up, for =int= it is /usually/ 4, but shouldn't count on it.
+
+
+So we use the =*= after the type name to indicate that the variable is not directly of that type but
+rather is a pointer to an object of that type. How can we /use/ the pointer then?
+
+#+begin_src c
+  int* pointer_to_an_int = malloc(sizeof(int));
+  pointer_to_an_int = 5; // this does not work!
+#+end_src
+
+Just trying to assign 5 to the pointer variable will not work. If you want to interact with the
+actual value /behind/ the pointer, you will have to *dereference the pointer*. You do this with a
+=*= again. So the correct code looks like this:
+
+#+begin_src c
+  int* pointer_to_an_int = malloc(sizeof(int));
+  // set the variable at the adress of pointer_to_an_int to the value 5
+  *pointer_to_an_int = 5;
+#+end_src
+
+You can also get the adress of any variable with the adress-of operator =&=. So malloc is not the
+only way to generate pointers. This would look something like this:
+
+#+begin_src c
+  int i = 5;
+  // pointer_to_an_int is of type "pointer to integer" and assign to it the address of i;
+  int* pointer_to_an_int = &i;
+
+  *pointer_to_an_int = 10;
+  // i is now 10
+#+end_src
+
+
+With all this knowledge we can now write a function that changes a variable in the calling function.
+We do this by passing a pointer, and changing the value at the address the pointer points to.
+
+#+begin_src c
+  #include<stdio.h>
+
+  void change_it(int* var) {
+      *var = 1000;
+  }
+
+  int main(int argc, char* argv[]) {
+      int var = 10;
+      printf("var is: %d\n", var);
+      change_it(&var);
+      printf("var is: %d\n", var);
+      return 0;
+  }
+
+  // outputs:
+  // 10
+  // 1000
+#+end_src
+
+We can also write a somehow useful function, that was impossible to write before. The =swap=
+function, which allows us to pass in two variables and =swap= exchanges the values between them. Of
+course we could exchange the variables manually but you usually need a temporary variable and if you
+want to swap a lot of variables, a function will make it cleaner.
+
+#+begin_src c
+  #include<stdio.h>
+
+  void swap(int* a, int* b) {
+      int temp = *a;
+      *a = *b;
+      *b = temp;
+  }
+
+  int main(int argc, char* argv[]) {
+      int a = 5;
+      int b = 20;
+
+      printf("a:%d b:%d\n", a, b);
+      swap(&a, &b);
+      printf("a:%d b:%d\n", a, b);
+
+  }
+
+  // outputs:
+  // a:5 b:20
+  // a:20 a:5
+#+end_src
+
+Once we we reserve memory with =malloc=, our process uses more memory than before, and if we keep
+mallocing we would eventually run out of memory. To tell the operating system, that we will not use
+a block of memory anymore that we malloced before, we use the =free= function. By doing that you
+return that memory back to the operating system, and you should not use it anymore.
+
+#+begin_src c
+  #include<stdio.h>
+
+  int main(int argc, char* argv[]) {
+      int* a = malloc(sizeof(int));
+      *a = 10
+      printf("a: %d\n", *a);
+      free(a);
+      // don't try to dereference >a< after you called free on it.
+      // Sometimes it could still work, sometimes you will get random
+      // values and sometimes your porgram will crash..
+  }
+
+#+end_src
+
 * Future                                                           :noexport:
 ** labels and goto
 ** switch statements
@@ -940,7 +1174,4 @@ B wins after 8 turns and has 9 health left!
  used for types / categories
 ** unions
 ** #define
-** pointers and adresses
- & and ->
 ** sizeof
-** heap and stack memory
