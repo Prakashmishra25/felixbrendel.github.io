@@ -1,0 +1,126 @@
+* Hausaufgaben Tag 1
+Mach dir am besten für die Hausaufgaben einen neuen Order, damit man die Dateien dann schnell
+wiederfinden kann.
+
+** Sternmuster 1
+
+In dieser Aufgabe geht es darum, verschiedene Muster auf dem Terminal auszugeben. Das erste ist ein
+Dreieck. Der Benutzer wird zuerst nach einer natürlichen Zahl gefragt und dann soll ein Dreieck mit
+der Größe der Eingabe des Benutzers ausgegeben werden.
+
+Das sieht dann zum Beispiel so aus, wenn der Benutzer =7= eingibt:
+
+#+begin_src
+ Geben Sie eine Größe ein: 7
+
+ *
+ **
+ ***
+ ****
+ *****
+ ******
+ *******
+#+end_src
+
+Oder so:
+
+
+#+begin_src
+ Geben Sie eine Größe ein: 3
+
+ *
+ **
+ ***
+#+end_src
+
+** Sternmuster 2
+Als nächstes wollen wir das Dreieck andersherum ausgeben:
+
+#+begin_src
+ Geben Sie eine Größe ein: 7
+
+       *
+      **
+     ***
+    ****
+   *****
+  ******
+ *******
+#+end_src
+
+Oder auch:
+
+#+begin_src
+ Geben Sie eine Größe ein: 3
+
+   *
+  **
+ ***
+#+end_src
+
+** Sternmuster 3
+Jetzt kombinieren wir die Muster aus 1 und 2 und wollen dieses Muster erstellen:
+
+#+begin_src
+ Geben Sie eine Größe ein: 7
+
+       * *
+      ** **
+     *** ***
+    **** ****
+   ***** *****
+  ****** ******
+ ******* *******
+#+end_src
+
+Oder auch:
+
+#+begin_src
+ Geben Sie eine Größe ein: 3
+
+   * *
+  ** **
+ *** ***
+#+end_src
+** Summe aller Zahlen in einem Intervall
+Schreibe ein Programm, dass den Benutzer nach einer natürlichen Zahl fragt und dann die Summe aller
+Zahlen von 0 bis zu dieser Zahl berechnet. Das sieht dann zum Beispiel so aus:
+
+#+begin_src
+ Geben Sie eine Zahl ein: 4
+ 10
+#+end_src
+
+10 ist das Ergebnis weil:
+$1+2+3+4=10$
+
+Oder
+
+#+begin_src
+ Geben Sie eine Zahl ein: 10
+ 55
+#+end_src
+55 ist das Ergebnis weil:
+$1+2+3+4+5+6+7+8+9+10=55$
+
+** Summe aller geraden Zahlen in einem Intervall
+Jetzt erweitern wir das Programm aus der letzten Aufgabe sodass nur noch die Summe der geraden
+Zahlen berechnet wird:
+
+
+#+begin_src
+ Geben Sie eine Zahl ein: 4
+ 6
+#+end_src
+
+6 ist das Ergebnis weil:
+$2+4=6$
+
+Oder
+
+#+begin_src
+ Geben Sie eine Zahl ein: 10
+ 30
+#+end_src
+55 ist das Ergebnis weil:
+$2+4+6+8+10=30$
