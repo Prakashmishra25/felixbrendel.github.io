@@ -124,3 +124,69 @@ Oder
 #+end_src
 55 ist das Ergebnis weil:
 $2+4+6+8+10=30$
+** FizzBuzz
+Schreibe ein Programm, das die Zahlen von 1 bis 100 ausgibt. Aber:
+ - Wenn die Zahl durch 3 teilbar ist, gebe stattdessen "Fizz" aus.
+ - Wenn die Zahl durch 5 teilbar ist, gebe "Buzz" aus.
+ - Wenn sie durch 3 und 5 teilbar ist, gebe "FizzBuzz" aus.
+
+Das sieht dann so aus:
+
+#+begin_src
+ 1
+ 2
+ Fizz
+ 4
+ Buzz
+ Fizz
+ 7
+ 8
+ Fizz
+ Buzz
+ 11
+ Fizz
+ 13
+ 14
+ FizzBuzz
+ 16
+ ...
+#+end_src
+** Quadratzahlen
+Schreibe ein Programmm, das den Benutzer immer wieder und wieder nach natürlichen Zahlen fragt, und
+dann ausgibt, ob die eingegebene Zahl eine Quadratzahl ist.
+
+#+begin_src
+ Geben Sie eine Zahl ein: 3
+ > keine Quadratzahl
+
+ Geben Sie eine Zahl ein: 4
+ > Quadratzahl
+
+ Geben Sie eine Zahl ein: 22
+ > keine Quadratzahl
+
+ Geben Sie eine Zahl ein: 100
+ > Quadratzahl
+
+ ...
+#+end_src
+
+** Priemzahlen
+Schreibe ein Programmm, das den Benutzer immer wieder und wieder nach natürlichen Zahlen fragt, und
+dann ausgibt, ob die eingegebene Zahl eine Priemzahl ist.
+
+#+begin_src
+ Geben Sie eine Zahl ein: 3
+ > Priemzahl
+
+ Geben Sie eine Zahl ein: 4
+ > keine Priemzahl
+
+ Geben Sie eine Zahl ein: 22
+ > keine Priemzahl
+
+ Geben Sie eine Zahl ein: 101
+ > Priemzahl
+
+ ...
+#+end_src
