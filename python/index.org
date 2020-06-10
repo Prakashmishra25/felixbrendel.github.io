@@ -190,3 +190,78 @@ dann ausgibt, ob die eingegebene Zahl eine Priemzahl ist.
 
  ...
 #+end_src
+* Hausaufgaben Tag 2
+** Wörter zählen mit Dictionaries
+Schreibe ein Programm, das den Benutzer nach einem Text fragt und dann ausgibt wie oft jedes Wort
+in dem Text vorgekommen ist.
+
+#+begin_src
+ Geben Sie einen Text ein: Ein Text mit vielen vielen Wörter und mit vielen Zeichen
+
+ Ein: 1
+ Text: 1
+ mit: 2
+ vielen: 3
+ Wörter: 1
+ und: 1
+ Zeichen: 1
+#+end_src
+
+Tips:
+ - Man kann über die keys in dictionaries mit =for word in dict:= iterieren
+
+** Fakultät
+Schreibe ein Programm, das die Falkultät einer Zahl berechnet. Fakultät schreibt man so: $3!$. Das
+ist "3 Fakultät". Zum Beispiel "5 Fakultät" sieht so aus $5!$. Und wie berechnet man das?
+
+$$3! = 3 \cdot 2 \cdot 1 = 6$$
+
+und
+
+$$5! = 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120$$
+
+usw.
+
+Das Programm soll dann so laufen:
+
+#+begin_src
+ Geben Sie eine Zahl ein: 3
+ 3! = 6
+#+end_src
+
+oder
+
+#+begin_src
+ Geben Sie eine Zahl ein: 5
+ 5! = 120
+#+end_src
+
+** Fibonacci Zahlen
+Schreibe ein Programm das die n-te Fibonacci Zahl berechnet. Was sind die Fibonacci Zahlen?
+Die Fibonacci Zahlen sind diese Zahlen:
+
+$$1\ \ 1\ \ 2\ \ 3\ \ 5\ \ 8\ \ 13\ \ 21\ \ 34 \cdots usw$$
+
+Die ersten beiden Zahlen sind $1$, danach ist jede Zahl die Summe aus den beiden Zahlen davor.
+(Zum Beispiel $3 + 5 = 8$ oder $13 + 21 = 34$).
+
+Ein Ablauf des Programms sieht dann so aus:
+
+#+begin_src
+ Geben Sie eine Zahl ein: 3
+ fib(3) = 2
+#+end_src
+
+oder
+
+#+begin_src
+ Geben Sie eine Zahl ein: 5
+ fib(5) = 5
+#+end_src
+
+oder
+
+#+begin_src
+ Geben Sie eine Zahl ein: 8
+ fib(5) = 21
+#+end_src
