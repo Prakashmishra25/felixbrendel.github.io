@@ -1,0 +1,163 @@
+#+TITLE: Lukas exam
+
+* Runtime bestimmen
+
+Linked list of integers
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, int to_search) {
+    for (Node* head = node; head != NULL; head = head->next)
+        if (head->data == to_search)
+            return true;
+    return false;
+}
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, int to_search) {
+    if (node == NULL)
+        return false;
+
+    if (node->data == to_search)
+        return true;
+
+    return ll_find(node->next, to_search);
+}
+#+END_SRC
+
+Linked list of strings
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, char* to_search) {
+    if (node == NULL)
+        return false;
+
+    if (strcmp(node->data, to_search) == 0)
+        return true;
+
+    return ll_find(node->next, to_search);
+}
+#+END_SRC
+
+#+BEGIN_SRC cpp
+int sum = 0;
+int array[array_length];
+// array is being filled
+for (int i = 0, i < array_length; ++i) {
+    sum += array[i];
+}
+#+END_SRC
+
+#+BEGIN_SRC cpp
+int sum = 0;
+char array[4][array_length];
+// array is being filled
+for (int i = 0, i < array_length; ++i) {
+    for (int j = 0; j < 4; ++j) {
+        fprintf(file, "%c", array[j][i]);
+    }
+}
+#+END_SRC
+
+* What is wrong with this code
+
+#+BEGIN_SRC cpp
+bool array_find(int array[], int array_length, int to_search) {
+    for (int i = array_length; i >= 0; --i) {
+        if (array[i] == to_search)
+            return true;
+        return false;
+    }
+}
+#+END_SRC
+
+** Solution :noexport:
+1. array index starts at one too late
+2. the false return has to be outside the for loop
+
+* What will happen?
+
+#+BEGIN_SRC cpp
+#include <stdio.h>
+
+int main() {
+    int i = 10;
+    while (i --> 0) printf("%s\n", (i % 2 == 0) ? "even" : "odd");
+    return 0;
+}
+#+END_SRC
+** Solution :noexport:
+odd
+even
+odd
+even
+odd
+even
+odd
+even
+odd
+even
+
+* Queue and Stack
+#+BEGIN_SRC cpp
+struct Stack {
+    Stack* next_block;
+    FILE* data;
+}
+#+END_SRC
+
+Implement the operations:
+ - =void push(Stack* stack, FILE* data)=
+ - =FILE* pop(Stack* stack)= 
+
+#+BEGIN_SRC cpp
+typedef struct Queue {
+    Queue_Node* first;
+    Queue_Node* last;
+} Queue;
+
+typedef struct Queue_Node {
+    Queue_Node* next_in_queue;
+    float data;
+} Queue_Node;
+#+END_SRC
+
+Implement the operations:
+ - =Queue* create_empty_queue()=
+ - =void enqueue(Queue* queue, float data)=
+ - =FILE* dequeue(Queue* queue)=
+
+** Question
+Why does it make sense, to have only one structure for the stack and two for the queue?
+
+* Data structures
+** Lists
+#+BEGIN_SRC cpp
+typedef struct List {
+    int data;
+    List* rest; // pointer to the rest of the list
+}
+#+END_SRC
+
+*** write the functions:
+1. =int size(List* l)=
+2. =print_front_to_back(List* l)=
+3. =print_back_to_front(List* l)=
+4. =int sum_of_all_elements(List* l)=
+
+*** complete the function:
+1. =int average_of_all_elements(List* l)=
+
+#+BEGIN_SRC cpp
+int average_of_all_elements_inner(List* l, int sum, int count) {
+    if (l == NULL) {
+        ______;
+    }
+    return average_of_all_elements_inner(l->next, ______,  ______);
+}
+
+int average_of_all_elements(List* l) {
+    return average_of_all_elements_inner(l, ______, ______);
+}
+#+END_SRC
