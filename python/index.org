@@ -265,3 +265,67 @@ oder
  Geben Sie eine Zahl ein: 8
  fib(5) = 21
 #+end_src
+* Hausaufgaben Tag 3
+** Fibonacci Zahlen mit Dictionaries
+Schreibe ein Programm dass den Benutzer in einer Endlosschleife (=while True:=) nach Zahlen fragt
+und dann die dazugehörige Fibonaccizahl ausgibt.
+
+Schreibe die rekursive Fibonacci Funktion aber diesmal benutze ein Dictionary, um zusätzlich die
+Ergebnisse zu speichern. Wenn zweimal dieselbe Fibonaccizahl gefragt wird, muss sie nicht zweimal
+berechnet werden, sondern, nur einmal und beim zweiten mal in dem Dictionary nachgeschaut werden.
+Das macht die Berechnung goßer Fibonaccizahlen viel Schneller.
+
+Das Dictionary soll dabei als Key die Zahlen beinhalten, die der Benutzer eingegeben hat, und als
+Values die dazugehörigen Fibonaccizahlen.
+
+Einen solchen Speicher für Ergebisse, damit sie nicht nochmal berechent werden müssen nennt man
+übrigens *Cache*.
+
+#+begin_src
+ Geben Sie eine Zahl ein: 3
+ fib(3) = 2
+
+ Geben Sie eine Zahl ein: 5
+ fib(3) = 5
+
+ Geben Sie eine Zahl ein: 5
+ fib(3) = 5
+#+end_src
+** Rückgeld
+Schreibe ein Programm, dass den Benutzer eine ganze Zahl eingeben lässt. Diese Zahl ist das Rückgeld
+was wir dem Benutzer zurückzahlen müssen, in Cent. Wir haben die üblichen Scheine und Münzen zur
+Verfügung:
+
+| Euro | Cent |
+|------+------|
+| 500€ | 50ct |
+| 200€ | 20ct |
+| 100€ | 10ct |
+| 50€  | 5ct  |
+| 20€  | 2ct  |
+| 10€  | 1ct  |
+| 5€   |      |
+| 2€   |      |
+| 1€   |      |
+
+Das Programm gibt dann eine Möglichkeit aus, den Betrag auszuzahlen.
+
+#+begin_src
+ Geben Sie einen Centbetrag ein: 35
+
+ 1x 20ct
+ 1x 10ct
+ 1x 5ct
+#+end_src
+
+oder:
+
+#+begin_src
+ Geben Sie einen Centbetrag ein: 499
+
+ 2x 2€
+ 1x 50ct
+ 2x 20ct
+ 1x 5ct
+ 2x 2ct
+#+end_src
