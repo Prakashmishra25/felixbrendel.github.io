@@ -1,105 +1,43 @@
 #+TITLE: Lukas exam
 
-* Runtime bestimmen
+* C
+** General
+- Explain =#include=
+- Explain =#define=
+- Explain forward declarations
+- Explain header files
+- Explain =struct=
+- Explain =typedef=
+- Explain =sizeof=
+- Explain =recursion=, using the terms:
+  - callstack
+  - stack frame
+- what is a pointer and show code how you use one to change the value of a
+  variable
+- what is an array
+- what is a string
+** Some Functions
+*** Sqrt
+A way to iteratively estimate square roots is [[https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method][babylonian method of finding
+square roots]].
 
-Linked list of integers
-#+BEGIN_SRC cpp
-bool ll_find(Node* node, int to_search) {
-    for (Node* head = node; head != NULL; head = head->next)
-        if (head->data == to_search)
-            return true;
-    return false;
-}
-#+END_SRC
+   1. Start with an initial guess $x_0$ (1 works, too) of the square root of a
+      number $S$.
+   2. Every next estimate $x_{n+1}$ depends on the last one $$x_{n+1} =
+      \frac{1}{2}(x_n+\frac{S}{x_n})$$
+   3. Repeat step 2 until the desired precision is reached.
 
-#+RESULTS:
+   Write a program =sqrt.c= that reads a float from the user and calculates its
+   square root to the precision of 6 digits after the decimal point. A run will
+   look like this:
 
+#+begin_src sh
+./sqrt
 
-#+BEGIN_SRC cpp
-bool ll_find(Node* node, int to_search) {
-    if (node == NULL)
-        return false;
-
-    if (node->data == to_search)
-        return true;
-
-    return ll_find(node->next, to_search);
-}
-#+END_SRC
-
-Linked list of strings
-#+BEGIN_SRC cpp
-bool ll_find(Node* node, char* to_search) {
-    if (node == NULL)
-        return false;
-
-    if (strcmp(node->data, to_search) == 0)
-        return true;
-
-    return ll_find(node->next, to_search);
-}
-#+END_SRC
-
-#+BEGIN_SRC cpp
-int sum = 0;
-int array[array_length];
-// array is being filled
-for (int i = 0, i < array_length; ++i) {
-    sum += array[i];
-}
-#+END_SRC
-
-#+BEGIN_SRC cpp
-int sum = 0;
-char array[4][array_length];
-// array is being filled
-for (int i = 0, i < array_length; ++i) {
-    for (int j = 0; j < 4; ++j) {
-        fprintf(file, "%c", array[j][i]);
-    }
-}
-#+END_SRC
-
-* What is wrong with this code
-
-#+BEGIN_SRC cpp
-bool array_find(int array[], int array_length, int to_search) {
-    for (int i = array_length; i >= 0; --i) {
-        if (array[i] == to_search)
-            return true;
-        return false;
-    }
-}
-#+END_SRC
-
-** Solution :noexport:
-1. array index starts at one too late
-2. the false return has to be outside the for loop
-
-* What will happen?
-
-#+BEGIN_SRC cpp
-#include <stdio.h>
-
-int main() {
-    int i = 10;
-    while (i --> 0) printf("%s\n", (i % 2 == 0) ? "even" : "odd");
-    return 0;
-}
-#+END_SRC
-** Solution :noexport:
-odd
-even
-odd
-even
-odd
-even
-odd
-even
-odd
-even
-
-* Queue and Stack
+Enter any number: 2
+The square root of 2.000000 is 1.414214
+#+end_src
+** Queue and Stack
 #+BEGIN_SRC cpp
 struct Stack {
     Stack* next_block;
@@ -109,7 +47,7 @@ struct Stack {
 
 Implement the operations:
  - =void push(Stack* stack, FILE* data)=
- - =FILE* pop(Stack* stack)= 
+ - =FILE* pop(Stack* stack)=
 
 #+BEGIN_SRC cpp
 typedef struct Queue {
@@ -128,10 +66,165 @@ Implement the operations:
  - =void enqueue(Queue* queue, float data)=
  - =FILE* dequeue(Queue* queue)=
 
-** Question
+*** Question
 Why does it make sense, to have only one structure for the stack and two for the queue?
+** What is wrong with this code
+#+BEGIN_SRC cpp
+bool array_find(int array[], int array_length, int to_search) {
+    for (int i = array_length; i >= 0; --i) {
+        if (array[i] == to_search)
+            return true;
+        return false;
+    }
+}
+#+END_SRC
+*** Solution :noexport:
+1. array index starts at one too late
+2. the false return has to be outside the for loop
 
+** What will happen?
+
+#+BEGIN_SRC cpp
+#include <stdio.h>
+
+int main() {
+    int i = 10;
+    while (i --> 0) printf("%s\n", (i % 2 == 0) ? "even" : "odd");
+    return 0;
+}
+#+END_SRC
+*** Solution :noexport:
+odd
+even
+odd
+even
+odd
+even
+odd
+even
+odd
+even
+* Python
+** General
+- Explain the different usages for the built-in container types:
+  - list
+  - tuple
+  - dictionary
+  - set
+- Explain the =for= loop
+- Explain =range=
+- Explain =zip=
+- Explain =enumerate=
+** Some Functions
+*** range
+Write the =range= function yourself
+*** zip
+Write the =zip= function yourself
+*** enumerate
+Write the =enumerate= function yourself, using =zip= and =range=
+*** count words
+Write a function =count_words= that takes in a sentence (string) and returns a
+dictionary mapping the distinct words to the amount of times they appear in the
+sentence.
+
+Also explain what runtime your code has.
+*** remove doubles
+Write the function =remove_doubles= that takes a list as input and returns a
+list, that contains only distinct elements.
+
+Actually write two versions of it:
+1) One as short as possible
+2) One that is guaranteed to preserve the order of the original elements
+
+** OOP
+*** General questions
+Explain in two sentences each:
+ - what is a class
+ - what is an object
+ - what is inheritance
+ - why is inheritance useful
+ - what is an abstract method
+
+*** UML
+Implement the following UML diagram using python classes. Write the funcitons in
+a way that makes sense for the given context. (Yep, Klausurvorbereitung)
+
+[[./uml.png]]
+* Runtime
+** What are the Runtimes
+- Inserting something at the start of a list
+- Inserting something at the middle of a list
+- Inserting something at the end of a list (trick question)
+- Inserting a new element into a full array
+- Acessing something in an array
+- Overwriting something in an array
+** Linked list of integers 1
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, int to_search) {
+    for (Node* head = node; head != NULL; head = head->next)
+        if (head->data == to_search)
+            return true;
+    return false;
+}
+#+END_SRC
+
+** Linked list of integers 2
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, int to_search) {
+    if (node == NULL)
+        return false;
+
+    if (node->data == to_search)
+        return true;
+
+    return ll_find(node->next, to_search);
+}
+#+END_SRC
+
+** Linked list of strings
+#+BEGIN_SRC cpp
+bool ll_find(Node* node, char* to_search) {
+    if (node == NULL)
+        return false;
+
+    if (strcmp(node->data, to_search) == 0)
+        return true;
+
+    return ll_find(node->next, to_search);
+}
+#+END_SRC
+
+** array 1
+#+BEGIN_SRC cpp
+int sum = 0;
+int array[array_length];
+// array is being filled
+for (int i = 0, i < array_length; ++i) {
+    sum += array[i];
+}
+#+END_SRC
+
+** array 2
+#+BEGIN_SRC cpp
+int sum = 0;
+char array[4][array_length];
+// array is being filled
+for (int i = 0, i < array_length; ++i) {
+    for (int j = 0; j < 4; ++j) {
+        fprintf(file, "%c", array[j][i]);
+    }
+}
+#+END_SRC
+
+** Extra
+What is the runtime of DFS?
 * Data structures
+** General
+*** write as much as you know: what is same, what is different?
+- compare python lists  and and c arrays,
+- compare python lists  and and c linked lists
+- compare python tuples and and c arrays
+- compare python dictionaries and and c hash tables
 ** Lists
 #+BEGIN_SRC cpp
 typedef struct List {
@@ -160,4 +253,17 @@ int average_of_all_elements_inner(List* l, int sum, int count) {
 int average_of_all_elements(List* l) {
     return average_of_all_elements_inner(l, ______, ______);
 }
+#+END_SRC
+* Bonus
+** 1
+1. What does this code do?
+2. What runtimme has it?
+3. Write code that does the same but has a better runtime?
+
+#+BEGIN_SRC python
+l = generate_some_list()
+d = {}
+
+for e in l:
+    d[e] = l.count(e)
 #+END_SRC
