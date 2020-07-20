@@ -1,4 +1,42 @@
 #+TITLE: Lukas exam
+* Sortings
+** Bubble sort
+- can only swap two adjacent values in the array
+- goes from front to back and swaps the current two values if out of order (by
+  itself $O(n)$)
+- has to do this n times, hence a runtime of $O(n^2)$
+** Insertion sort
+- have a sorted sub-array
+- Take next element of the not-sorted sub-array and search for the place in the
+  sorted sub array, in which it has to fit in (by itself $O(n)$)
+- then shift elements of the array to the right to make space for the new
+  element. (by itself also $O(n)$ but since they are done after each other, in
+  total until now we are still $O(2n) == O(n)$)
+- *insert* the element into the new free space
+- Do this n times, hence a runtime of  $O(n^2)$
+
+** Selection sort
+- have a sorted sub-array
+- go through the unsorted sub-array and *select* the next minimum (or maximum if
+  sorting /desc/) (by itself $O(n)$)
+- put it as the next element of the sorted sub-array (by swapping it with the
+  first element of the non-soted sub array)
+- do this n times, hence a runtime of $O(n^2)$
+** Merge sort
+- recursive algorithm
+- if array is just len 0 or len 1, it is already sorted
+- if it is longer, divide them in half, and recusively mergesort both halfes
+- now *merge* the two sorted arrays to one and we are done (merging is $O(n)$)
+- total runtime is $O(n\cdot log(n))$ because the tree hight with n children is
+  $log(n)$ and we are creating a tree of the array by splitting it always in
+  half)
+** Quicksort
+- Somehow find a pivot element
+- reorder the elements in the array such that all elements lower or equal to the
+  pivot are on the left of all elements that are bigger
+- recusively call quicksort on both sides
+- Worst case runtime is $O(n^2)$, because if we keep being unlucky with the
+  pivot elements we are effectively doing Selection sort
 
 * C
 ** General
@@ -150,6 +188,7 @@ Implement the following UML diagram using python classes. Write the funcitons in
 a way that makes sense for the given context. (Yep, Klausurvorbereitung)
 
 [[./uml.png]]
+
 * Runtime
 ** What are the Runtimes
 - Inserting something at the start of a list
