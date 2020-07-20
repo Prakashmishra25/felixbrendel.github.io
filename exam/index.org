@@ -31,7 +31,8 @@
   $log(n)$ and we are creating a tree of the array by splitting it always in
   half)
 ** Quicksort
-- Somehow find a pivot element
+- recursive algorithm
+- somehow find a pivot element
 - reorder the elements in the array such that all elements lower or equal to the
   pivot are on the left of all elements that are bigger
 - recusively call quicksort on both sides
